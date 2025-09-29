@@ -1,0 +1,4 @@
+const STORE_KEY = 'SHAPE_STORE';
+const ROOT_2 = 1.41421356237;
+
+export { STORE_KEY, ROOT_2 };

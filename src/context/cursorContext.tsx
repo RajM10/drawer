@@ -1,4 +1,4 @@
-import {NavbarType} from '@/Type/navbarType';
+import { NavbarType } from '@/types/navbarType';
 import {
   createContext,
   Dispatch,
@@ -13,12 +13,12 @@ const cursorContext = createContext<{
   scale: number;
   setScale: Dispatch<SetStateAction<number>>;
   setCursor: Dispatch<SetStateAction<NavbarType>>;
-}>({cursor: 'hand', scale: 1, setScale: () => {}, setCursor: () => {}});
-export function CursorProvider({children}: {children: ReactNode}) {
+}>({ cursor: 'hand', scale: 1, setScale: () => {}, setCursor: () => {} });
+export function CursorProvider({ children }: { children: ReactNode }) {
   const [cursor, setCursor] = useState<NavbarType>('hand');
   const [scale, setScale] = useState<number>(1);
   return (
-    <cursorContext.Provider value={{cursor, scale, setCursor, setScale}}>
+    <cursorContext.Provider value={{ cursor, scale, setCursor, setScale }}>
       {children}
     </cursorContext.Provider>
   );

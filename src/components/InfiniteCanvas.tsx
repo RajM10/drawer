@@ -1,6 +1,6 @@
 'use client';
-import {useRef, useState, useEffect} from 'react';
-import type {MouseEvent} from 'react';
+import { useRef, useState, useEffect } from 'react';
+import type { MouseEvent } from 'react';
 
 interface Element {
   x: number;
@@ -13,10 +13,10 @@ export default function InfiniteCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [elements, setElements] = useState<Element[]>([]);
   const isDragging = useRef(false);
-  const lastPos = useRef({x: 0, y: 0});
+  const lastPos = useRef({ x: 0, y: 0 });
   const dpr = useRef(1);
-  const [dim, setDim] = useState({width: 0, height: 0});
-  const transformRef = useRef({x: 0, y: 0, scale: 1});
+  const [dim, setDim] = useState({ width: 0, height: 0 });
+  const transformRef = useRef({ x: 0, y: 0, scale: 1 });
   const animationFrameRef = useRef<number>(0);
 
   const screenToWorld = (
@@ -29,7 +29,7 @@ export default function InfiniteCanvas() {
     // Convert screen coordinates to world coordinates
     const x = (screenX - offsetX) / scale;
     const y = (screenY - offsetY) / scale;
-    return {x, y};
+    return { x, y };
   };
   // const worldToScreen = (
   //   worldX: number,
@@ -52,17 +52,17 @@ export default function InfiniteCanvas() {
   useEffect(() => {
     const height = window.innerHeight;
     const width = window.innerWidth;
-    setDim({width, height});
+    setDim({ width, height });
 
     // Add initial centered rectangle
     const centerX = width / 2;
     const centerY = height / 2;
-    setElements([{x: centerX - 50, y: centerY - 30, width: 100, height: 60}]);
+    setElements([{ x: centerX - 50, y: centerY - 30, width: 100, height: 60 }]);
 
     const handleResize = () => {
       const height = window.innerHeight;
       const width = window.innerWidth;
-      setDim({width, height});
+      setDim({ width, height });
     };
 
     window.addEventListener('resize', handleResize);
@@ -73,7 +73,7 @@ export default function InfiniteCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d', {willReadFrequently: true});
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
 
     dpr.current = window.devicePixelRatio || 1;
@@ -91,10 +91,10 @@ export default function InfiniteCanvas() {
       ctx.save();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const {x, y, scale} = transformRef.current;
+      const { x, y, scale } = transformRef.current;
       ctx.setTransform(scale, 0, 0, scale, x, y);
 
-      elements.forEach((el) => {
+      elements.forEach(el => {
         ctx.beginPath();
         ctx.strokeStyle = 'red';
         ctx.rect(el.x, el.y, el.width, el.height);
@@ -116,7 +116,7 @@ export default function InfiniteCanvas() {
 
   const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
     isDragging.current = true;
-    lastPos.current = {x: e.clientX, y: e.clientY};
+    lastPos.current = { x: e.clientX, y: e.clientY };
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
@@ -124,7 +124,7 @@ export default function InfiniteCanvas() {
 
     const dx = (e.clientX - lastPos.current.x) * dpr.current;
     const dy = (e.clientY - lastPos.current.y) * dpr.current;
-    lastPos.current = {x: e.clientX, y: e.clientY};
+    lastPos.current = { x: e.clientX, y: e.clientY };
 
     transformRef.current.x += dx;
     transformRef.current.y += dy;
@@ -142,7 +142,11 @@ export default function InfiniteCanvas() {
     const mouseY = e.clientY;
 
     // Get current transform values
-    const {x: offsetX, y: offsetY, scale: currentScale} = transformRef.current;
+    const {
+      x: offsetX,
+      y: offsetY,
+      scale: currentScale,
+    } = transformRef.current;
 
     // Calculate the world position of the mouse
     const worldPos = screenToWorld(

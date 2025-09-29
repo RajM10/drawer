@@ -42,7 +42,8 @@ function Button({
   return (
     <button
       className={`${baseStyles} ${styles} ${className} ${sizeStyle}`}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {children}
     </button>
   );

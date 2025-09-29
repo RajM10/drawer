@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 
 export default function OptionsContainer({
   children,
@@ -15,5 +15,9 @@ export default function OptionsContainer({
     secondary: 'size-5.5  ',
   };
 
-  return <div className={`${styles.base} ${styles[style]} ${className}`}>{children}</div>;
+  return (
+    <div className={`${styles.base} ${styles[style]} ${className}`}>
+      {children}
+    </div>
+  );
 }

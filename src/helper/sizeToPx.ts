@@ -1,4 +1,4 @@
-import {FontSize} from '@/components/shapes/types';
+import { FontSize } from '@/components/shapes/types';
 
 export function SizeToPx(size: FontSize): number {
   switch (size) {

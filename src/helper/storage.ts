@@ -1,5 +1,5 @@
-import {STORE_KEY} from '../const/const';
-import {Shape} from '../../components/shapes/types';
+import { STORE_KEY } from '@/constants/constants';
+import { Shape } from '@/types/shape';
 
 const isBrowser = typeof window !== 'undefined';
 

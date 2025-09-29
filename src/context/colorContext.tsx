@@ -1,14 +1,22 @@
 'use client';
 
-import {createContext, ReactNode, useContext, useState, useEffect} from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from 'react';
 
 interface ColorContextType {
   strokeColor: string;
 }
 
-const ColorContext = createContext<ColorContextType>({strokeColor: '#000000'});
+const ColorContext = createContext<ColorContextType>({
+  strokeColor: '#000000',
+});
 
-export function ColorProvider({children}: {children: ReactNode}) {
+export function ColorProvider({ children }: { children: ReactNode }) {
   const [strokeColor, setStrokeColor] = useState('#000000');
 
   useEffect(() => {
@@ -29,7 +37,7 @@ export function ColorProvider({children}: {children: ReactNode}) {
   }, []);
 
   return (
-    <ColorContext.Provider value={{strokeColor}}>
+    <ColorContext.Provider value={{ strokeColor }}>
       {children}
     </ColorContext.Provider>
   );
