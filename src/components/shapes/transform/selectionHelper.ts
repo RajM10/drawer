@@ -30,30 +30,18 @@ export function drawSelectedHelper(
   ctx.strokeStyle = SELECTION_COLOR;
   ctx.lineWidth = LINE_WIDTH;
   if (shape === 'line' || shape === 'arrow') {
-    const CIRCLE_RADIUS = 6; // Size of endpoint circles
-
-    // Draw selection circles at start and end points
-    ctx.beginPath();
-    ctx.fillStyle = '#ffffff'; // White fill
-    ctx.strokeStyle = SELECTION_COLOR; // Blue border
-
-    // Start point circle
-    ctx.beginPath();
-    ctx.arc(alignedX, alignedY, CIRCLE_RADIUS, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // End point circle
-    ctx.beginPath();
-    ctx.arc(
-      alignedX + alignedWidth,
-      alignedY + alignedHeight,
-      CIRCLE_RADIUS,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-    ctx.stroke();
+    // Line/Arrow highlight temporarily disabled per request
+    // const CIRCLE_RADIUS = 6;
+    // ctx.beginPath();
+    // ctx.fillStyle = '#ffffff';
+    // ctx.strokeStyle = SELECTION_COLOR;
+    // ctx.arc(alignedX, alignedY, CIRCLE_RADIUS, 0, Math.PI * 2);
+    // ctx.fill();
+    // ctx.stroke();
+    // ctx.beginPath();
+    // ctx.arc(alignedX + alignedWidth, alignedY + alignedHeight, CIRCLE_RADIUS, 0, Math.PI * 2);
+    // ctx.fill();
+    // ctx.stroke();
   } else {
     // Draw selection border
     ctx.rect(
@@ -64,66 +52,66 @@ export function drawSelectedHelper(
     );
     ctx.stroke();
 
-    // Draw corner handles
-    ctx.fillStyle = '#ffffff'; // White fill
-    ctx.strokeStyle = SELECTION_COLOR; // Blue border
-    ctx.lineWidth = LINE_WIDTH;
+  //   // Draw corner handles
+  //   ctx.fillStyle = '#ffffff'; // White fill
+  //   ctx.strokeStyle = SELECTION_COLOR; // Blue border
+  //   ctx.lineWidth = LINE_WIDTH;
 
-    // Top-left handle
-    ctx.fillRect(
-      alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
-    ctx.strokeRect(
-      alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
+  //   // Top-left handle
+  //   ctx.fillRect(
+  //     alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
+  //   ctx.strokeRect(
+  //     alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
 
-    // Top-right handle
-    ctx.fillRect(
-      alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
-    ctx.strokeRect(
-      alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
+  //   // Top-right handle
+  //   ctx.fillRect(
+  //     alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
+  //   ctx.strokeRect(
+  //     alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
 
-    // Bottom-left handle
-    ctx.fillRect(
-      alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
-    ctx.strokeRect(
-      alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
+  //   // Bottom-left handle
+  //   ctx.fillRect(
+  //     alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
+  //   ctx.strokeRect(
+  //     alignedX - SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
 
-    // Bottom-right handle
-    ctx.fillRect(
-      alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
-    ctx.strokeRect(
-      alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
-      alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
-      HANDLE_SIZE,
-      HANDLE_SIZE
-    );
+  //   // Bottom-right handle
+  //   ctx.fillRect(
+  //     alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
+  //   ctx.strokeRect(
+  //     alignedX + alignedWidth + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     alignedY + alignedHeight + SELECTION_GAP - HANDLE_SIZE / 2,
+  //     HANDLE_SIZE,
+  //     HANDLE_SIZE
+  //   );
   }
   ctx.restore();
 }

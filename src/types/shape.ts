@@ -12,6 +12,7 @@ export interface Shape {
   text?: Text;
   color?: string;
   opacity?: number;
+  strokeWidth?: number;
   data: Data;
   isSelected: boolean;
 }
@@ -29,6 +30,7 @@ export interface Text {
   fontSize: FontSize;
   fontFamily: string;
   fontStyle: FontStyle;
+  align?: 'left' | 'center' | 'right';
 }
 export type FontSize = 'xs' | 'sm' | 'base' | 'md' | 'lg' | 'xl' | '2xl';
 export type FontStyle = 'bold' | 'italic' | 'semibold' | 'normal' | 'underline';

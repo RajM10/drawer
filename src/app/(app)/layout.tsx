@@ -1,9 +1,6 @@
 'use client';
-import Hamburger from '@/components/Hamburger';
-import Help from '@/components/Help';
 import MainNav from '@/components/MainNav';
 import OptionMenu from '@/components/OptionMenu/OptionMenu';
-import ShareBtn from '@/components/Share';
 import Zoom_Undo from '@/components/Zoom_Undo';
 import { ColorProvider } from '@/context/colorContext';
 import { CursorProvider } from '@/context/cursorContext';
@@ -25,9 +22,9 @@ function DashboardLayout({ children }: { children: ReactNode }) {
           </DataProvider>
           <Zoom_Undo />
         </CursorProvider>
-        <Hamburger />
-        <ShareBtn />
-        <Help />
+        {/* <Hamburger /> */}
+        {/* <ShareBtn /> */}
+        {/* <Help /> */}
       </ColorProvider>
     </>
   );

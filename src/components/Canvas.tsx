@@ -98,6 +98,31 @@ export default function Canvas() {
     };
   }, [dim, strokeColor, cursor, setCursor]);
 
+  // Listen for shapesUpdated events to refresh ShapesRef for live updates
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const custom = e as CustomEvent<Shape[]>;
+      console.log('[Canvas.shapesUpdated] event received', custom.detail?.length);
+      if (Array.isArray(custom.detail)) {
+        // mutate in place so the render loop's captured array sees updates
+        ShapesRef.current.splice(0, ShapesRef.current.length, ...custom.detail);
+        // keep selected shape in sync
+        if (selectedShape.current) {
+          const match = custom.detail.find(s => s.id === selectedShape.current?.id) || null;
+          console.log('[Canvas.syncSelected]', { before: selectedShape.current, after: match });
+          selectedShape.current = match;
+          setSelectedShape(match || null);
+          setShowOptionMenu(!!match);
+        }
+      } else {
+        const latest = getShapes();
+        ShapesRef.current.splice(0, ShapesRef.current.length, ...latest);
+      }
+    };
+    window.addEventListener('shapesUpdated', handler as EventListener);
+    return () => window.removeEventListener('shapesUpdated', handler as EventListener);
+  }, [setSelectedShape, setShowOptionMenu]);
+
   const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
     if (cursor !== 'hand') {
       isDrawing.current = true;
@@ -125,6 +150,7 @@ export default function Canvas() {
         path: cursor === 'draw' ? [{ x, y }] : undefined,
         color: strokeColor,
         opacity: 100,
+        strokeWidth: 2,
       };
       ShapesRef.current.push(newShape);
       lastPos.current = {
@@ -358,6 +384,11 @@ export default function Canvas() {
       };
       appendShapes([newShape]);
       ShapesRef.current.push(newShape);
+      // select the new text and show option menu
+      ShapesRef.current.forEach(s => (s.isSelected = s.id === newShape.id));
+      selectedShape.current = newShape;
+      setSelectedShape(newShape);
+      setShowOptionMenu(true);
     }
     setTextInput({ x: 0, y: 0, show: false, value: '' });
     setCursor('hand');

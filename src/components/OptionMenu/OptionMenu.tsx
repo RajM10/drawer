@@ -1,21 +1,18 @@
+import { useSelection } from '@/context/selectionContext';
+import { getShapes, mutateShape, saveShapes, updateShape } from '@/helper/storage';
+import { Shape } from '@/types/shape';
 import {
   AlignCenter,
   AlignLeft,
   AlignRight,
-  CodeXml,
   CopyIcon,
-  Pen,
-  Trash2,
-  Type,
+  Trash2
 } from 'lucide-react';
 import Container from './Container';
 import Label from './Label';
 import OptionsContainer from './Options';
 import Row from './Row';
 import Slider from './Slider';
-import { useSelection } from '@/context/selectionContext';
-import { updateShape } from '@/helper/storage';
-import { Shape } from '@/types/shape';
 
 export default function OptionMenu() {
   const {
@@ -28,10 +25,20 @@ export default function OptionMenu() {
 
   if (!showOptionMenu || !selectedShape) return null;
 
+  const getTextWithDefaults = () => {
+    const base = selectedShape.text || {
+      value: '',
+      fontSize: 'md' as const,
+      fontFamily: 'Arial',
+      fontStyle: 'normal' as const,
+    };
+    return base;
+  };
+
   const handleColorChange = (color: string) => {
+    console.log('[OptionMenu.colorClick]', { id: selectedShape.id, color });
     updateSelectedShape({ color });
-    // Update the shape in storage
-    updateShape(selectedShape.id, { color });
+    mutateShape(selectedShape.id, s => ({ ...s, color }));
   };
 
   const handleOpacityChange = (opacity: number) => {
@@ -40,21 +47,29 @@ export default function OptionMenu() {
   };
 
   const handleDelete = () => {
-    // Remove shape from storage
-    const shapes = JSON.parse(localStorage.getItem('shapes') || '[]');
-    const updatedShapes = shapes.filter(
-      (shape: Shape) => shape.id !== selectedShape.id
-    );
-    localStorage.setItem('shapes', JSON.stringify(updatedShapes));
-
+    const shapes = getShapes();
+    const updatedShapes = shapes.filter((shape: Shape) => shape.id !== selectedShape.id);
+    saveShapes(updatedShapes);
     setSelectedShape(null);
     setShowOptionMenu(false);
   };
 
-  const handleCopy = () => {
-    // Copy shape logic would go here
-    console.log('Copy shape:', selectedShape);
-  };
+  // const handleCopy = () => {
+  //   if (!selectedShape) return;
+  //   const clone: Shape = {
+  //     ...selectedShape,
+  //     id: crypto.randomUUID(),
+  //     x: selectedShape.x + 10,
+  //     y: selectedShape.y + 10,
+  //     isSelected: true,
+  //   };
+  //   // Deselect previous selection and append clone
+  //   const shapes = getShapes().map(s => ({ ...s, isSelected: false }));
+  //   saveShapes([...shapes, clone]);
+  //   setSelectedShape(clone);
+  //   updateSelectedShape(clone);
+  //   setShowOptionMenu(true);
+  // };
   return (
     <div className='fixed top-1/6 left-4 z-20 grid max-w-[13rem] grid-cols-1 gap-y-4 rounded-lg bg-slate-900 p-3 select-none'>
       <Container>
@@ -97,7 +112,8 @@ export default function OptionMenu() {
           />
         </Row>
       </Container>
-      <Container>
+      {/* Only show typography options for text shapes */}
+      {/* <Container>
         <Label name='Font family' />
         <Row>
           <OptionsContainer>
@@ -110,36 +126,85 @@ export default function OptionMenu() {
             <CodeXml size={16} strokeWidth={1.4} />
           </OptionsContainer>
         </Row>
-      </Container>
-      <Container>
-        <Label name='font size' />
-        <Row>
-          <OptionsContainer>S</OptionsContainer>
-          <OptionsContainer>M</OptionsContainer>
-          <OptionsContainer>L</OptionsContainer>
-          <OptionsContainer>XL</OptionsContainer>
-        </Row>
-      </Container>
-      <Container>
-        <Label name='text align' />
-        <Row>
-          <OptionsContainer>
-            <AlignLeft size={16} strokeWidth={1.4} />
-          </OptionsContainer>
-          <OptionsContainer>
-            <AlignCenter size={16} strokeWidth={1.4} />
-          </OptionsContainer>
-          <OptionsContainer>
-            <AlignRight size={16} strokeWidth={1.4} />
-          </OptionsContainer>
-        </Row>
-      </Container>
+      </Container> */}
+      {selectedShape.type === 'text' && (
+        <>
+          <Container>
+            <Label name='font size' />
+            <Row>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, fontSize: 'sm' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, fontSize: 'sm' } }));
+              }}>S</OptionsContainer>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, fontSize: 'md' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, fontSize: 'md' } }));
+              }}>M</OptionsContainer>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, fontSize: 'lg' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, fontSize: 'lg' } }));
+              }}>L</OptionsContainer>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, fontSize: 'xl' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, fontSize: 'xl' } }));
+              }}>XL</OptionsContainer>
+            </Row>
+          </Container>
+          <Container>
+            <Label name='text align' />
+            <Row>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, align: 'left' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, align: 'left' } }));
+              }}>
+                <AlignLeft size={16} strokeWidth={1.4} />
+              </OptionsContainer>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, align: 'center' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, align: 'center' } }));
+              }}>
+                <AlignCenter size={16} strokeWidth={1.4} />
+              </OptionsContainer>
+              <OptionsContainer onClick={() => {
+                const base = getTextWithDefaults();
+                updateSelectedShape({ text: { ...base, align: 'right' } });
+                mutateShape(selectedShape.id, s => ({ ...s, text: { ...base, align: 'right' } }));
+              }}>
+                <AlignRight size={16} strokeWidth={1.4} />
+              </OptionsContainer>
+            </Row>
+          </Container>
+        </>
+      )}
       <Container>
         <Label name='opacity' />
         <Row>
           <Slider
             value={selectedShape.opacity || 100}
-            onChange={handleOpacityChange}
+            onChange={(val) => {
+              console.log('[OptionMenu.opacitySlide]', { id: selectedShape.id, val });
+              updateSelectedShape({ opacity: val });
+              mutateShape(selectedShape.id, s => ({ ...s, opacity: val }));
+            }}
+          />
+        </Row>
+      </Container>
+      <Container>
+        <Label name='stroke width' />
+        <Row>
+          <Slider
+            value={selectedShape.strokeWidth || 2}
+            onChange={(val) => {
+              console.log('[OptionMenu.strokeSlide]', { id: selectedShape.id, val });
+              updateSelectedShape({ strokeWidth: val });
+              mutateShape(selectedShape.id, s => ({ ...s, strokeWidth: val }));
+            }}
           />
         </Row>
       </Container>
@@ -149,9 +214,9 @@ export default function OptionMenu() {
           <OptionsContainer onClick={handleDelete}>
             <Trash2 size={16} strokeWidth={1.4} />
           </OptionsContainer>
-          <OptionsContainer onClick={handleCopy}>
+          {/* <OptionsContainer onClick={handleCopy}>
             <CopyIcon size={16} strokeWidth={1.4} />
-          </OptionsContainer>
+          </OptionsContainer> */}
         </Row>
       </Container>
     </div>

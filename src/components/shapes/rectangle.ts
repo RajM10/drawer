@@ -19,7 +19,6 @@ export function drawRectangle(
     drawSelectedHelper(ctx, alignedX, alignedY, alignedWidth, alignedHeight);
   }
   ctx.beginPath();
-  ctx.lineWidth = 2;
   ctx.rect(alignedX, alignedY, alignedWidth, alignedHeight);
   ctx.stroke();
 }

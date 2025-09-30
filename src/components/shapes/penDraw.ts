@@ -9,7 +9,6 @@ export function PenDraw(
   if (!path || path.length === 0) return;
 
   ctx.beginPath();
-  ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 

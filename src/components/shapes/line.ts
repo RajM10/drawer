@@ -20,7 +20,6 @@ export function drawLine(
   }
 
   ctx.beginPath();
-  ctx.lineWidth = 2;
   ctx.moveTo(startX, startY);
   ctx.lineTo(endX, endY);
   ctx.stroke();
@@ -51,7 +50,6 @@ export function drawArrow(
     drawSelectedHelper(ctx, startX, startY, width, height, 'arrow');
   }
   ctx.beginPath();
-  ctx.lineWidth = 2;
   ctx.moveTo(startX, startY);
   ctx.lineTo(endX, endY);
 

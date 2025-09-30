@@ -15,13 +15,22 @@ export function drawText(
   // ctx.font = `24px ${text.fontFamily}'`;
   ctx.fillStyle = ctx.strokeStyle; // Use the same color as other shapes
   ctx.textBaseline = 'middle';
+  // Set alignment
+  const align = text.align || 'left';
+  ctx.textAlign = align as CanvasTextAlign;
   if (isSelected) {
     drawSelectedHelper(ctx, x, y, width, height);
   }
   ctx.beginPath();
   text.value.split('\n').forEach((line, index) => {
     const lineHeight = SizeToPx(text.fontSize) * 1.2; // Adjust line height as needed
-    ctx.fillText(line, x, y + index * lineHeight);
+    let drawX = x;
+    if (align === 'center') {
+      drawX = x + width / 2;
+    } else if (align === 'right') {
+      drawX = x + width;
+    }
+    ctx.fillText(line, drawX, y + index * lineHeight);
   });
   ctx.closePath();
 }

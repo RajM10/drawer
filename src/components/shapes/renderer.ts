@@ -13,7 +13,7 @@ import { Point, Shape } from '@/types/shape';
 import { ROOT_2 } from '@/constants/constants';
 
 export function renderShape(ctx: CanvasRenderingContext2D, shape: Shape) {
-  const { type, x, y, height, width, isSelected, color, opacity } = shape;
+  const { type, x, y, height, width, isSelected, color, opacity, strokeWidth } = shape;
   const path = shape?.path;
   const text = shape?.text;
 
@@ -27,6 +27,9 @@ export function renderShape(ctx: CanvasRenderingContext2D, shape: Shape) {
   }
   if (opacity !== undefined) {
     ctx.globalAlpha = opacity / 100;
+  }
+  if (strokeWidth !== undefined) {
+    ctx.lineWidth = strokeWidth;
   }
 
   switch (type) {

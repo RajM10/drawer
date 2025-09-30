@@ -23,7 +23,6 @@ export function drawSquare(
 
   // Draw the main square with original stroke color
   ctx.beginPath();
-  ctx.lineWidth = 2;
   ctx.rect(alignedX, alignedY, side, side);
   ctx.stroke();
 }
