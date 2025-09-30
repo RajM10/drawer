@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drawer - Interactive Whiteboard Application
 
-## Getting Started
+A modern, feature-rich whiteboard application built with Next.js, TypeScript, and Canvas API. Create, draw, and collaborate with an intuitive drawing interface.
 
-First, run the development server:
+## 🎨 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### ✅ **Currently Working**
+- **Drawing Tools**: Pen, shapes (rectangle, circle, square, diamond, line, arrow)
+- **Text Input**: Add text annotations to your canvas
+- **Shape Selection**: Click on any drawn shape to select it
+- **Interactive Option Menu**: 
+  - Color picker with 7 predefined colors
+  - Opacity slider (0-100%)
+  - Delete and copy actions
+- **Canvas Navigation**: Pan and zoom functionality
+- **Persistent Storage**: All drawings are saved locally
+- **Responsive Design**: Works on desktop and mobile devices
+
+### 🚧 **Work in Progress**
+- Shape transformation (resize, rotate)
+- Advanced text formatting options
+- Image upload and manipulation
+- Undo/Redo functionality
+- Export options (PNG, SVG, PDF)
+- Real-time collaboration
+- Layer management
+- Custom brush sizes and styles
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.5.4 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Canvas**: HTML5 Canvas API
+- **State Management**: React Context API
+- **Storage**: LocalStorage
+- **Icons**: Lucide React
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd drawer
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) (or the port shown in terminal)
+
+## 📖 How to Use
+
+### Drawing
+1. **Select a tool** from the navigation bar
+2. **Click and drag** on the canvas to draw
+3. **Release** to complete the shape
+
+### Shape Selection & Editing
+1. **Click on any shape** to select it
+2. **Option menu appears** with editing controls
+3. **Change color** by clicking color buttons
+4. **Adjust opacity** using the slider
+5. **Delete shape** with the trash icon
+6. **Click empty space** to deselect
+
+### Navigation
+- **Pan**: Click and drag with hand tool
+- **Zoom**: Use mouse wheel or pinch gestures
+- **Reset**: Use zoom controls in the interface
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/                    # Next.js app directory
+│   ├── (app)/             # App routes
+│   └── layout.tsx         # Root layout
+├── components/            # React components
+│   ├── Canvas.tsx         # Main canvas component
+│   ├── OptionMenu/        # Shape editing menu
+│   ├── shapes/           # Drawing shape implementations
+│   └── ...               # Other UI components
+├── context/              # React contexts
+│   ├── colorContext.tsx  # Color management
+│   ├── cursorContext.tsx # Tool state
+│   ├── dataContext.tsx   # Data management
+│   └── selectionContext.tsx # Shape selection
+├── helper/               # Utility functions
+├── math/                # Mathematical utilities
+├── types/               # TypeScript definitions
+└── utils/               # General utilities
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Key Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Canvas Component
+- Handles all drawing interactions
+- Manages shape creation and rendering
+- Implements selection and editing logic
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Option Menu
+- Context-aware shape editing
+- Real-time property updates
+- Persistent storage integration
 
-## Learn More
+### Shape System
+- Modular shape implementations
+- Consistent rendering pipeline
+- Hit detection for selection
 
-To learn more about Next.js, take a look at the following resources:
+## 🔧 Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Adding New Shapes
+1. Create shape function in `src/components/shapes/`
+2. Add to renderer switch statement
+3. Update hit detection logic
+4. Add to navigation types
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Adding New Properties
+1. Update `Shape` interface in `src/types/shape.ts`
+2. Modify shape creation in Canvas
+3. Add UI controls in OptionMenu
+4. Update rendering logic
 
-## Deploy on Vercel
+### State Management
+- **Color Context**: Global color settings
+- **Cursor Context**: Active tool state
+- **Selection Context**: Shape selection and editing
+- **Data Context**: File and data management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🐛 Known Issues
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Some advanced features are still in development
+- Mobile touch interactions may need refinement
+- Performance optimization needed for large drawings
+- Export functionality not yet implemented
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🚀 Roadmap
+
+- [ ] Advanced shape transformations
+- [ ] Real-time collaboration
+- [ ] Export/Import functionality
+- [ ] Plugin system
+- [ ] Performance optimizations
+- [ ] Mobile app version
+
+---
+
+**Note**: This is a work in progress. Some features may not be fully functional yet. Check the "Currently Working" section for stable features.

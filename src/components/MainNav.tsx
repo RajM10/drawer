@@ -58,10 +58,10 @@ function MainNav() {
       name: 'text',
       icon: <LetterText className={`${iconStyle}`} strokeWidth={1.69} />,
     },
-    {
-      name: 'eraser',
-      icon: <Eraser className={`${iconStyle}`} strokeWidth={1.69} />,
-    },
+    // {
+    //   name: 'eraser',
+    //   icon: <Eraser className={`${iconStyle}`} strokeWidth={1.69} />,
+    // },
     {
       name: 'clear all',
       icon: <Trash2 className={`${iconStyle}`} strokeWidth={1.69} />,
