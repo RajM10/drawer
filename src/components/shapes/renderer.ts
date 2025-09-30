@@ -13,12 +13,21 @@ import { Point, Shape } from '@/types/shape';
 import { ROOT_2 } from '@/constants/constants';
 
 export function renderShape(ctx: CanvasRenderingContext2D, shape: Shape) {
-  const { type, x, y, height, width, isSelected } = shape;
+  const { type, x, y, height, width, isSelected, color, opacity } = shape;
   const path = shape?.path;
   const text = shape?.text;
 
   // Save the current context state
   ctx.save();
+
+  // Set color and opacity
+  if (color) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+  }
+  if (opacity !== undefined) {
+    ctx.globalAlpha = opacity / 100;
+  }
 
   switch (type) {
     case 'line':

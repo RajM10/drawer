@@ -1,12 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-export default function Slider() {
+interface SliderProps {
+  value?: number;
+  onChange?: (value: number) => void;
+}
+
+export default function Slider({ value: propValue, onChange }: SliderProps) {
   const min = 0;
   const max = 100;
   const step = 1;
-  const [value, setValue] = useState(100);
+  const [value, setValue] = useState(propValue || 100);
+
+  // Update local state when prop changes
+  React.useEffect(() => {
+    if (propValue !== undefined) {
+      setValue(propValue);
+    }
+  }, [propValue]);
 
   const percent = ((value - min) / (max - min)) * 100;
 
@@ -28,7 +40,11 @@ export default function Slider() {
           max={max}
           step={step}
           value={value}
-          onChange={e => setValue(Number(e.target.value))}
+          onChange={e => {
+            const newValue = Number(e.target.value);
+            setValue(newValue);
+            onChange?.(newValue);
+          }}
           className='absolute w-full h-2 appearance-none bg-transparent cursor-pointer top-1/2 -translate-y-1/2'
           style={{ zIndex: 10 }}
         />

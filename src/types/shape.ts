@@ -11,6 +11,7 @@ export interface Shape {
   path?: Path[];
   text?: Text;
   color?: string;
+  opacity?: number;
   data: Data;
   isSelected: boolean;
 }

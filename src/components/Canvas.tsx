@@ -3,11 +3,17 @@
 import { isPointInShape, renderCanvas } from '@/components/shapes/renderer';
 import { useColor } from '@/context/colorContext';
 import { useCursor } from '@/context/cursorContext';
+import { useSelection } from '@/context/selectionContext';
 
 import type { FocusEvent, MouseEvent, TouchEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import Input from './Input';
-import { appendShapes, clearStorage, getShapes, updateShapes } from '@/helper/storage';
+import {
+  appendShapes,
+  clearStorage,
+  getShapes,
+  updateShapes,
+} from '@/helper/storage';
 import { Shape } from '@/types/shape';
 import { screenToWorld } from '@/math/screenToWorld';
 import { worldToScreen } from '@/math/worldToScreen';
@@ -17,6 +23,7 @@ export default function Canvas() {
   const [dim, setDim] = useState({ width: 0, height: 0 });
   const { cursor, setCursor, setScale, scale } = useCursor();
   const { strokeColor } = useColor();
+  const { setSelectedShape, setShowOptionMenu } = useSelection();
   const transformRef = useRef({ x: 0, y: 0, scale: scale });
   const dpr = useRef(1);
   const isDrawing = useRef(false);
@@ -116,6 +123,8 @@ export default function Canvas() {
         type: cursor,
         data: { src: '' },
         path: cursor === 'draw' ? [{ x, y }] : undefined,
+        color: strokeColor,
+        opacity: 100,
       };
       ShapesRef.current.push(newShape);
       lastPos.current = {
@@ -362,18 +371,37 @@ export default function Canvas() {
       transformRef.current.y,
       transformRef.current.scale
     );
+
+    let clickedShape: Shape | null = null;
+
+    // Check if any shape was clicked
     ShapesRef.current.forEach(shape => {
       const isPointing = isPointInShape(updatedPoints, shape);
-      if (shape.isSelected) {
-        shape.isSelected = false;
-        selectedShape.current = null;
-      }
-
       if (isPointing) {
-        shape.isSelected = !shape.isSelected;
-        selectedShape.current = shape;
+        clickedShape = shape;
       }
     });
+
+    if (clickedShape) {
+      // Deselect all other shapes
+      ShapesRef.current.forEach(shape => {
+        shape.isSelected = false;
+      });
+
+      // Select the clicked shape
+      clickedShape.isSelected = true;
+      selectedShape.current = clickedShape;
+      setSelectedShape(clickedShape);
+      setShowOptionMenu(true);
+    } else {
+      // Clicked on empty space - deselect all
+      ShapesRef.current.forEach(shape => {
+        shape.isSelected = false;
+      });
+      selectedShape.current = null;
+      setSelectedShape(null);
+      setShowOptionMenu(false);
+    }
   }
 
   return (

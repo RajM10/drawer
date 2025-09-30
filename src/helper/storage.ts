@@ -18,6 +18,15 @@ export function updateShapes(updatedShapes: Shape[]) {
   saveShapes(updatedShapes);
 }
 
+export function updateShape(shapeId: string, updates: Partial<Shape>) {
+  const shapes = getShapes();
+  const updatedShapes = shapes.map(shape =>
+    shape.id === shapeId ? { ...shape, ...updates } : shape
+  );
+  saveShapes(updatedShapes);
+  return updatedShapes;
+}
+
 export function appendShapes(newShapes: Shape[]) {
   const currentShapes = getShapes();
   const updatedShapes = [...currentShapes, ...newShapes];

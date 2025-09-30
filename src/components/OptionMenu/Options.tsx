@@ -4,10 +4,12 @@ export default function OptionsContainer({
   children,
   className = '',
   style = 'primary',
+  onClick,
 }: {
   children?: ReactNode;
   className?: string;
   style?: 'primary' | 'secondary';
+  onClick?: () => void;
 }) {
   const styles = {
     base: 'flex cursor-pointer items-center rounded-md justify-center p-1  ',
@@ -16,7 +18,10 @@ export default function OptionsContainer({
   };
 
   return (
-    <div className={`${styles.base} ${styles[style]} ${className}`}>
+    <div
+      className={`${styles.base} ${styles[style]} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
