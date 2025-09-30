@@ -375,13 +375,13 @@ export default function Canvas() {
     let clickedShape: Shape | null = null;
 
     // Check if any shape was clicked
-    ShapesRef.current.forEach(shape => {
+    for (const shape of ShapesRef.current) {
       const isPointing = isPointInShape(updatedPoints, shape);
       if (isPointing) {
         clickedShape = shape;
+        break;
       }
-    });
-
+    }
     if (clickedShape) {
       // Deselect all other shapes
       ShapesRef.current.forEach(shape => {

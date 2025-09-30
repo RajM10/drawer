@@ -1,11 +1,12 @@
-import { NavbarType } from '@/Type/navbarType';
-import { Shape } from '../types';
+
 import {
   HANDLE_SIZE,
   LINE_WIDTH,
   SELECTION_COLOR,
   SELECTION_GAP,
 } from '@/constants/shape';
+import { NavbarType } from '@/types/navbarType';
+import { Shape } from '@/types/shape';
 const RESIZE_HANDLE_SIZE = 8;
 
 export interface SelectionState {
